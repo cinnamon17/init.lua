@@ -84,13 +84,28 @@ require("formatter").setup({
 
 		rust = {
 
-				function ()
+			function()
+				return {
+					exe = "rustfmt",
+					args = { "--edition 2021" },
+					stdin = true,
+				}
+			end,
+		},
+
+		typescript = {
+
+			function()
 					return {
-						exe = "rustfmt",
-						args = { "--edition 2021" },
+						exe = "prettier",
+						args = {
+							"--stdin-filepath",
+							util.escape_path(util.get_current_buffer_file_path()),
+						},
 						stdin = true,
+						try_node_modules = true,
 					}
-				end
+			end,
 		},
 
 		-- Use the special "*" filetype for defining formatter configurations on
