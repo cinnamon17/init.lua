@@ -111,60 +111,30 @@ require("formatter").setup({
 		html = {
 
 			function()
-				local M = {}
-
-				M.prettier = util.copyf(defaults.prettier)
-
-				M.prettierd = util.copyf(defaults.prettierd)
-
-				M.prettydiff = util.withl(defaults.prettydiff, "html")
-
-				function M.tidy()
-					return {
-						exe = "tidy",
-						args = { "-quiet" },
-						try_node_modules = true,
-					}
-				end
-
-				function M.htmlbeautify()
-					return {
-						exe = "html-beautify",
-						stdin = 1,
-					}
-				end
-
-				return M
+				return {
+					exe = "prettier",
+					args = {
+						"--stdin-filepath",
+						util.escape_path(util.get_current_buffer_file_path()),
+					},
+					stdin = true,
+					try_node_modules = true,
+				}
 			end,
 		},
 
 		twig = {
 
 			function()
-				local M = {}
-
-				M.prettier = util.copyf(defaults.prettier)
-
-				M.prettierd = util.copyf(defaults.prettierd)
-
-				M.prettydiff = util.withl(defaults.prettydiff, "html")
-
-				function M.tidy()
-					return {
-						exe = "tidy",
-						args = { "-quiet" },
-						try_node_modules = true,
-					}
-				end
-
-				function M.htmlbeautify()
-					return {
-						exe = "html-beautify",
-						stdin = 1,
-					}
-				end
-
-				return M
+				return {
+					exe = "prettier",
+					args = {
+						"--stdin-filepath",
+						util.escape_path(util.get_current_buffer_file_path()),
+					},
+					stdin = true,
+					try_node_modules = true,
+				}
 			end,
 		},
 		-- Use the special "*" filetype for defining formatter configurations on
