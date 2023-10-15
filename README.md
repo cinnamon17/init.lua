@@ -1,5 +1,12 @@
 ### ThePrimeagen's init.lua
 Prerequisite: install [ripgrep](https://github.com/BurntSushi/ripgrep).
+Prerequisite: install [packer](https://github.com/wbthomason/packer.nvim)
+
+### System requirements
+
+- Curl
+- unzip
+- gcc
 
 [The full video of me setting up this repo](https://www.youtube.com/watch?v=w7i4amO_zaE)
 
