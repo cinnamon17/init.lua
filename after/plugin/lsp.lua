@@ -17,13 +17,37 @@ end)
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
-  ensure_installed = {'tsserver', 'rust_analyzer', 'intelephense'},
+  ensure_installed = {
+        'tsserver',
+        'rust_analyzer',
+        'intelephense',
+        'jdtls',
+    },
+
   handlers = {
-    lsp_zero.default_setup,
-    lua_ls = function()
-      local lua_opts = lsp_zero.nvim_lua_ls()
-      require('lspconfig').lua_ls.setup(lua_opts)
-    end,
+      lsp_zero.default_setup,
+      lua_ls = function()
+          local lua_opts = lsp_zero.nvim_lua_ls()
+          require('lspconfig').lua_ls.setup(lua_opts)
+      end,
+      jdtls = function()
+          local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
+          local workspace_dir = '/home/nelson/eclipse-workspace/' .. project_name
+
+          require('lspconfig').jdtls.setup({
+              cmd = { "/usr/local/src/jdk-21+35/bin/java",
+                "-Declipse.application=org.eclipse.jdt.ls.core.id1",
+                "-Dosgi.bundles.defaultStartLevel=4",
+                "-Declipse.product=org.eclipse.jdt.ls.core.product",
+                "-Dlog.protocol=true", "-Dlog.level=ALL", "-Xms1g", "-Xmx2G",
+                "-jar", "/home/nelson/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_1.6.700.v20231214-2017.jar",
+                "-configuration", "/home/nelson/.local/share/nvim/mason/packages/jdtls/config_linux/", "-data", workspace_dir,
+                "--add-modules=ALL-SYSTEM", "--add-opens java.base/java.util=ALL-UNNAMED",
+                "--add-opens java.base/java.lang=ALL-UNNAMED"
+            }
+
+          })
+      end
   }
 })
 
